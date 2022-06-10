@@ -1,3 +1,24 @@
+# Next To Go
+
+## Description
+
+This is a project that displays the latest 5 racing events.
+The project used React and TypeScript.
+
+## Process of thought
+
+- Some constants to define variables like `api endpoint`, `category_id`
+- Define types as I am using TypeScript for the code test.
+- Need a function or custom hook to fetch the json data from the api endpoint. Note: I used in-component function first then abstracted as a custom hook,so the code is much cleaner.
+- Need a sort function to sort the response by the `advertised_start` ascent. Note: found it is not necessary as the next-to-go-ids is in required order, the file should be removed, just leave it here so to prove if the response unordered how I would handle it.
+- Need a component to render each race info, including `meating name`, `race number`, `advertised start`, named the component `Card` for this Test
+- How to filter out the races that need to be rendered.
+- Refetch the racing data intermittently (1min).
+
+## Todo
+
+Used `button` to toggle the race type, maybe `checkbox` is a better choice, so we can display more than one types
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -7,6 +28,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 In the project directory, you can run:
 
 ### `npm start`
+
+First time run after cloning, run `npm i` to install necessary dependencies.
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -28,19 +51,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
