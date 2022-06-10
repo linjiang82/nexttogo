@@ -1,27 +1,29 @@
-.card{
-  display: flex;
-  flex-direction:column;
-  background-color:#999;
-  margin:10px auto;
-  padding:0 10px;
+p {
+  padding: 5px;
+  margin: 0;
 }
-
-.raceNumber{
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: #999;
+  margin: 5px;
+  padding: 0 10px;
+  width: 19%;
+  border: 1px solid #fff;
+}
+.raceNumber {
   color: blue;
 }
-.logo{
-  width:20px;
-  height:20px;
+.logo {
+  width: 20px;
+  height: 20px;
 }
-.timer{
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  gap: 10px
+.timer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
-.countDownRed{
-  color:red;
-}
-.countDownBlue{
-  color:blue;
+.countDown {
+  color: red;
 }
