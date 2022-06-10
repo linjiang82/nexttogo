@@ -4,6 +4,7 @@ import './App.css';
 import { fetchData } from './utils/fetchData'
 import { ENDPOINT } from './utils/constants'
 import { TRace } from './utils/types'
+import { Card } from './components/Card'
 
 function App() {
   const [racingData, setRacingData] = useState<Record<string, TRace>>()
@@ -30,17 +31,12 @@ function App() {
       clearInterval(timeId)
     }
   }, [])
-  console.log(ids)
-  console.log(racingData)
   return (
     <>
-      <div>{time}</div>
       {error && <div>{error}</div>}
       {
         racingData && ids && ids.map((id) =>
-          < div className="App">
-            {racingData[id].race_number}
-          </div>
+          <Card raceSum={racingData[id]} />
         )
       }
     </>
