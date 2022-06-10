@@ -8,3 +8,5 @@ export type TRace = {
     "seconds": number
   },
 }
+
+export type TFilter = keyof typeof RacingCategory | ''

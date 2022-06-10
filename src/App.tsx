@@ -1,44 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { fetchData } from './utils/fetchData'
-import { ENDPOINT } from './utils/constants'
-import { TRace } from './utils/types'
-import { Card } from './components/Card'
+import React, { useEffect, useMemo, useState } from "react";
+import "./App.css";
+import { RacingCategory } from "./utils/constants";
+import { TFilter } from "./utils/types";
+import { Card } from "./components/Card";
+import { useFetchData } from "./hooks/useFetchData";
 
 function App() {
-  const [racingData, setRacingData] = useState<Record<string, TRace>>()
-  const [ids, setIds] = useState<string[]>()
-  const [error, setError] = useState()
-  const [time, setTime] = useState(Date.now())
+  const [time, setTime] = useState(Date.now());
+  const [filter, setFilter] = useState<TFilter>("");
+  const { error, ids, racingData } = useFetchData();
 
   // fetch data on component mount
   useEffect(() => {
-    fetchData(ENDPOINT).then(res => {
-      if (res.error) {
-        setError(res.error)
-      }
-      else {
-        const { next_to_go_ids: ids, race_summaries } = res.data
-        setIds(ids)
-        setRacingData(race_summaries)
-      }
-    })
-    const timeId = setInterval(() => {
-      setTime(Date.now())
+    const timerId = setInterval(() => {
+      setTime(Math.floor(Date.now() / 1000));
     }, 1000);
     return () => {
-      clearInterval(timeId)
+      clearInterval(timerId);
+    };
+  }, []);
+
+  const handleFilter = (val: TFilter) => {
+    setFilter(val);
+  };
+
+  // filter category if set then filter out those started for 1min
+  const filteredRaces = useMemo(() => {
+    if (racingData && ids) {
+      return ids
+        .filter((id) => {
+          if (filter !== "")
+            return racingData[id].category_id === RacingCategory[filter];
+          return true;
+        })
+        .filter((id) => {
+          return time - racingData[id].advertised_start.seconds < 60;
+        })
+        .map((id) => {
+          return <Card key={id} race={racingData[id]} />;
+        })
+        .slice(0, 5);
     }
-  }, [])
+  }, [filter, time, ids, racingData]);
+
   return (
     <>
-      {error && <div>{error}</div>}
-      {
-        racingData && ids && ids.map((id) =>
-          <Card raceSum={racingData[id]} />
-        )
-      }
+      <div>
+        <button onClick={() => handleFilter("")}>All</button>
+        <button onClick={() => handleFilter("HORSE_RACING")}>Horse</button>
+        <button onClick={() => handleFilter("HARNESS_RACING")}>Harness</button>
+        <button onClick={() => handleFilter("GREYHOUND_RACING")}>
+          Greyhound
+        </button>
+      </div>
+      <div className='container'>
+        {error && <div>{error}</div>}
+        {filteredRaces}
+      </div>
     </>
   );
 }
